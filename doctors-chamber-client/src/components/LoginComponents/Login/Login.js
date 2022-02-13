@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import login from '../../../images/login.png';
 
 const Login = () => {
@@ -21,7 +22,7 @@ const Login = () => {
         e.preventDefault();
         alert('Login Successful');
     }
-    console.log(loginData);
+    // console.log(loginData);
     return (
         <Container>
             <Grid container spacing={2}>
@@ -48,6 +49,7 @@ const Login = () => {
                             type={'password'}
                         />
                         <Button variant='contained' sx={{ width: '100%', m: 1 }} type="submit">Login</Button>
+                        <NavLink to="/register"><Button variant="text">New User? Please Register</Button></NavLink>
                     </form>
                 </Grid>
                 <Grid item xs={12} md={8}>
