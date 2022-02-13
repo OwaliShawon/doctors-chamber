@@ -1,14 +1,17 @@
-import { Container } from '@mui/material';
+import { Alert, AlertTitle, CircularProgress, Container } from '@mui/material';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import useAuth from '../../../hooks/useAuth';
 import login from '../../../images/login.png';
 
 const Register = () => {
     const [loginData, setLoginData] = useState({});
+
+    const { user, registerUser, isLoading, authError } = useAuth();
 
     const handleOnChange = (e) => {
         const field = e.target.name;
@@ -22,6 +25,7 @@ const Register = () => {
         if (loginData.password !== loginData.password2) {
             alert("pass did not match")
         }
+        registerUser(loginData.email, loginData.password);
         e.preventDefault();
     }
 
@@ -29,7 +33,7 @@ const Register = () => {
         <Container>
             <Grid container spacing={2}>
                 <Grid item xs={12} md={4}>
-                    <Typography variant="body2" component="h1" marginTop={5}>Login</Typography>
+                    <Typography variant="h5" component="h1" marginTop={5}>Register</Typography>
                     <form action="submit" onSubmit={handleLoginSubmit}>
                         <TextField
                             sx={{ width: '100%', m: 1 }}
@@ -60,9 +64,15 @@ const Register = () => {
                             variant='standard'
                             type={'password'}
                         />
-                        <Button variant='contained' sx={{ width: '100%', m: 1 }} type="submit">Login</Button>
+                        <Button variant='contained' sx={{ width: '100%', m: 1 }} type="submit">Signup</Button>
                         <NavLink to="/login"><Button variant="text">Already Register? Please Login</Button></NavLink>
                     </form>
+                    {isLoading && <CircularProgress />}
+                    {user?.email && <Alert severity="success">
+                        <AlertTitle>DONE</AlertTitle>
+                        Your Registration is — <strong>Successful!</strong>
+                    </Alert>}
+                    {authError && <Alert severity="error">{authError}</Alert>}
                 </Grid>
                 <Grid item xs={12} md={8}>
                     <img src={login} style={{ width: '100%' }} alt="" />

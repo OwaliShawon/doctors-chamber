@@ -11,16 +11,16 @@ import Home from "./Pages/Home/Home";
 function App() {
   return (
     <div className="App">
-      <Navigation></Navigation>
       <AuthProvider>
+        <Navigation></Navigation>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/appointment" element={<Appointment />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
+        <Footer></Footer>
       </AuthProvider>
-      <Footer></Footer>
     </div>
   );
 }
