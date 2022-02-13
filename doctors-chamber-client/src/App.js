@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import './App.css';
 import Login from "./components/LoginComponents/Login/Login";
+import PrivateRoute from "./components/LoginComponents/PrivateRoute/PrivateRoute";
 import Register from "./components/LoginComponents/Register/Register";
 import Footer from "./components/Shared/Footer/Footer";
 import Navigation from './components/Shared/Navigation/Navigation';
@@ -15,7 +16,15 @@ function App() {
         <Navigation></Navigation>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/appointment" element={<Appointment />} />
+          {/* <Route path="/appointment" element={<Appointment />} /> */}
+          <Route
+            path="/appointment"
+            element={
+              <PrivateRoute>
+                <Appointment />
+              </PrivateRoute>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
