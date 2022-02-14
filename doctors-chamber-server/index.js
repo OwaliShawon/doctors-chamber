@@ -14,7 +14,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 client.connect(err => {
     const collection = client.db("test").collection("devices");
     // perform actions on the collection object
-    console.log("connection success");
+    console.log("db connection success");
     client.close();
 });
 

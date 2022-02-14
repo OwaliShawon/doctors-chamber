@@ -4,12 +4,13 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import useAuth from '../../../hooks/useAuth';
 import login from '../../../images/login.png';
 
 const Register = () => {
     const [loginData, setLoginData] = useState({});
+    const navigate = useNavigate();
 
     const { user, registerUser, isLoading, authError } = useAuth();
 
@@ -25,7 +26,7 @@ const Register = () => {
         if (loginData.password !== loginData.password2) {
             alert("pass did not match")
         }
-        registerUser(loginData.email, loginData.password);
+        registerUser(loginData.email, loginData.password, navigate);
         e.preventDefault();
     }
 

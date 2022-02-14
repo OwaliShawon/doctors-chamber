@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import React from 'react';
+import useAuth from './../../../hooks/useAuth';
 
 const style = {
     position: 'absolute',
@@ -19,6 +20,7 @@ const style = {
 
 const BookingModal = ({ booking, openBooking, handleBookingClose, date }) => {
     const { name, time } = booking;
+    const { user } = useAuth();
 
     const handleBookingSubmit = (e) => {
         alert("Booking Successful");
@@ -40,9 +42,9 @@ const BookingModal = ({ booking, openBooking, handleBookingClose, date }) => {
                 <form onSubmit={handleBookingSubmit}>
                     <TextField fullWidth label={date.toDateString()} id="fullWidth" disabled sx={{ m: 1 }} />
                     <TextField fullWidth label={time} id="fullWidth" disabled sx={{ m: 1 }} />
-                    <TextField fullWidth label="Your Name" id="fullWidth" sx={{ m: 1 }} />
+                    <TextField defaultValue={user.displayName} fullWidth label="Your Name" id="fullWidth" sx={{ m: 1 }} />
                     <TextField fullWidth label="Your Number" id="fullWidth" sx={{ m: 1 }} />
-                    <TextField fullWidth label="Your Email" id="fullWidth" sx={{ m: 1 }} />
+                    <TextField defaultValue={user.email} fullWidth label="Your Email" id="fullWidth" sx={{ m: 1 }} />
                     <Button type="submit" variant="contained">Submit</Button>
                 </form>
             </Box>
