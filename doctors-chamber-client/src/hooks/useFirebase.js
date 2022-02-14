@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import { useEffect, useState } from 'react';
 import initializeFirebase from './../components/LoginComponents/Firebase/firebase.init';
 
@@ -10,6 +10,7 @@ const useFirebase = () => {
     const [authError, setAuthError] = useState('');
 
     const auth = getAuth();
+    const googleProvider = new GoogleAuthProvider();
 
     // new user registration
     const registerUser = (email, password) => {
@@ -77,12 +78,41 @@ const useFirebase = () => {
             .finally(() => setIsLoading(false));
     }
 
+    // google login
+    const googleLogin = (navigate, location) => {
+        setIsLoading(true);
+        signInWithPopup(auth, googleProvider)
+            .then((result) => {
+                const destination = location?.state?.from || '/appointment';
+                navigate(destination);
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const token = credential.accessToken;
+                // The signed-in user info.
+                const user = result.user;
+                // ...
+                setAuthError('');
+            }).catch((error) => {
+                // Handle Errors here.
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                setAuthError(error.message);
+                // The email of the user's account used.
+                const email = error.email;
+                // The AuthCredential type that was used.
+                const credential = GoogleAuthProvider.credentialFromError(error);
+                // ...
+            }).finally(() => setIsLoading(false));
+
+    }
+
     return {
         user,
         authError,
         registerUser,
         loginUser,
         logOutUser,
+        googleLogin,
     };
 }
 

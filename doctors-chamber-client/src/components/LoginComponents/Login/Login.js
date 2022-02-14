@@ -10,23 +10,29 @@ import useAuth from './../../../hooks/useAuth';
 
 const Login = () => {
     const [loginData, setLoginData] = useState({});
-    const { user, authError, registerUser, loginUser, isLoading } = useAuth();
+    const { user, authError, registerUser, loginUser, isLoading, googleLogin } = useAuth();
 
     let navigate = useNavigate();
     let location = useLocation();
 
-    const handleOnChange = (e) => {
+    const handleOnBlur = (e) => {
         const field = e.target.name;
         const value = e.target.value;
         const newLoginData = { ...loginData };
         newLoginData[field] = value;
         setLoginData(newLoginData);
+        console.log(loginData);
     }
 
     const handleLoginSubmit = (e) => {
         loginUser(loginData.email, loginData.password, navigate, location);
         e.preventDefault();
         // alert('Login Successful');
+    }
+
+    const handleGoogleLogin = (e) => {
+        googleLogin(navigate, location);
+        e.preventDefault();
     }
 
     return (
@@ -41,7 +47,7 @@ const Login = () => {
                             id="standard-basic"
                             label="Your Email"
                             name="email"
-                            onChange={handleOnChange}
+                            onBlur={handleOnBlur}
                             variant='standard'
                         />
                         <TextField
@@ -50,13 +56,16 @@ const Login = () => {
                             id="standard-basic"
                             label="Your Pass "
                             name='password'
-                            onChange={handleOnChange}
+                            onBlur={handleOnBlur}
                             variant='standard'
                             type={'password'}
                         />
                         <Button variant='contained' sx={{ width: '100%', m: 1 }} type="submit">Login</Button>
                         <NavLink to="/register"><Button variant="text">New User? Please Register</Button></NavLink>
                     </form>}
+                    <p>..........................</p>
+                    <Button variant="contained" color="primary" onClick={handleGoogleLogin}>Sign in With Google</Button>
+
                     {isLoading && <CircularProgress />}
                     {user?.email && <Alert severity="success">
                         <AlertTitle>DONE</AlertTitle>

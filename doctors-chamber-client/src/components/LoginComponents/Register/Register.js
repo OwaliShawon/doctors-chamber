@@ -13,7 +13,7 @@ const Register = () => {
 
     const { user, registerUser, isLoading, authError } = useAuth();
 
-    const handleOnChange = (e) => {
+    const handleOnBlur = (e) => {
         const field = e.target.name;
         const value = e.target.value;
         const newLoginData = { ...loginData };
@@ -39,9 +39,18 @@ const Register = () => {
                             sx={{ width: '100%', m: 1 }}
                             required
                             id="standard-basic"
+                            label="Your Name"
+                            name="name"
+                            onBlur={handleOnBlur}
+                            variant='standard'
+                        />
+                        <TextField
+                            sx={{ width: '100%', m: 1 }}
+                            required
+                            id="standard-basic"
                             label="Your Email"
                             name="email"
-                            onChange={handleOnChange}
+                            onBlur={handleOnBlur}
                             variant='standard'
                         />
                         <TextField
@@ -50,7 +59,7 @@ const Register = () => {
                             id="standard-basic"
                             label="Your Pass "
                             name='password'
-                            onChange={handleOnChange}
+                            onBlur={handleOnBlur}
                             variant='standard'
                             type={'password'}
                         />
@@ -60,7 +69,7 @@ const Register = () => {
                             id="standard-basic"
                             label="Retype Pass"
                             name='password2'
-                            onChange={handleOnChange}
+                            onBlur={handleOnBlur}
                             variant='standard'
                             type={'password'}
                         />
