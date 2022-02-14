@@ -44,7 +44,7 @@ const AppointmentAvailable = ({ date, setDate }) => {
             space: 10,
         },
     ]
-    console.log(date);
+
     return (
         <Container>
             <Typography variant='h4' sx={{ color: 'info.main', mb: 3, mt: 20 }}>Available Appointment On {date.toDateString()}</Typography>
