@@ -4,13 +4,16 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import login from '../../../images/login.png';
 import useAuth from './../../../hooks/useAuth';
 
 const Login = () => {
     const [loginData, setLoginData] = useState({});
     const { user, authError, registerUser, loginUser, isLoading } = useAuth();
+
+    let navigate = useNavigate();
+    let location = useLocation();
 
     const handleOnChange = (e) => {
         const field = e.target.name;
@@ -21,7 +24,7 @@ const Login = () => {
     }
 
     const handleLoginSubmit = (e) => {
-        loginUser(loginData.email, loginData.password);
+        loginUser(loginData.email, loginData.password, navigate, location);
         e.preventDefault();
         // alert('Login Successful');
     }

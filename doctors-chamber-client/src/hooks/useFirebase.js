@@ -32,10 +32,12 @@ const useFirebase = () => {
 
 
     // user login
-    const loginUser = (email, password) => {
+    const loginUser = (email, password, navigate, location) => {
         setIsLoading(true);
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
+                const destination = location?.state?.from || '/appointment';
+                navigate(destination);
                 // Signed in 
                 const user = userCredential.user;
                 // ...
