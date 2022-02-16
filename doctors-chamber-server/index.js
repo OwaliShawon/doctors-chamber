@@ -16,13 +16,26 @@ client.connect(err => {
     const database = client.db("doctor_DB_chamber");
     const appointmentCollection = database.collection("appointmentsCollection");
     // perform actions on the collection object
+    app.get('/appointments', (req, res) => {
+        const email = req.query.email;
+        const query = { patientEmail: email }
+        console.log(query);
+        appointmentCollection.find(query).toArray((err, result) => {
+            if (err) {
+                res.send(err);
+            } else {
+                res.send(result);
+            }
+        });
+    });
+
     app.post('/appointments', (req, res) => {
         const appointment = req.body;
         // console.log(appointment);
         // res.json({ message: 'success' });
         const result = appointmentCollection.insertOne(appointment);
-        res.json(result);
-    })
+        // res.json(result);
+    });
 
 
 

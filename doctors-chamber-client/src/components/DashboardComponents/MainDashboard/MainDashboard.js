@@ -1,6 +1,7 @@
 import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
+import { Grid } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,6 +16,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 import * as React from 'react';
+import Calender from '../../AppointmentComponent/Calender/Calender';
+import Appointments from './../Appointments/Appointments';
 
 const drawerWidth = 200;
 
@@ -108,7 +111,14 @@ function MainDashboard(props) {
             >
                 <Toolbar />
                 <Typography paragraph>
-                    contents
+                    <Grid container spacing={2}>
+                        <Grid item xs={8}>
+                            <Calender></Calender>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <Appointments></Appointments>
+                        </Grid>
+                    </Grid>
                 </Typography>
             </Box>
         </Box>
