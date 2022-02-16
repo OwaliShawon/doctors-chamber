@@ -16,6 +16,8 @@ client.connect(err => {
     const database = client.db("doctor_DB_chamber");
     const appointmentCollection = database.collection("appointmentsCollection");
     // perform actions on the collection object
+
+    // get all the appointments based on the patient email address
     app.get('/appointments', (req, res) => {
         const email = req.query.email;
         const query = { patientEmail: email }
@@ -29,12 +31,10 @@ client.connect(err => {
         });
     });
 
+    // insert new appointment
     app.post('/appointments', (req, res) => {
         const appointment = req.body;
-        // console.log(appointment);
-        // res.json({ message: 'success' });
         const result = appointmentCollection.insertOne(appointment);
-        // res.json(result);
     });
 
 
