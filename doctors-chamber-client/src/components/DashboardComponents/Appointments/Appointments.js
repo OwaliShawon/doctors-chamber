@@ -8,17 +8,18 @@ import TableRow from '@mui/material/TableRow';
 import React, { useEffect, useState } from 'react';
 import useAuth from './../../../hooks/useAuth';
 
-const Appointments = () => {
+const Appointments = ({ date }) => {
+    // date = date.toDateString()
+    // console.log(date)
     const { user } = useAuth();
-    // console.log(user);
     const [appointments, setAppointments] = useState([]);
 
     useEffect(() => {
-        const url = `http://localhost:5000/appointments?email=${user.email}`;
+        const url = `http://localhost:5000/appointments?email=${user.email}&date=${date}`;
         fetch(url)
             .then(response => response.json())
             .then((data) => { setAppointments(data) })
-    }, [])
+    }, [date]);
 
 
     return (

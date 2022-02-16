@@ -1,7 +1,7 @@
 import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
-import { Grid } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -16,12 +16,16 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 import * as React from 'react';
+import { NavLink } from 'react-router-dom';
 import Calender from '../../AppointmentComponent/Calender/Calender';
 import Appointments from './../Appointments/Appointments';
 
 const drawerWidth = 200;
 
 function MainDashboard(props) {
+
+    const [date, setDate] = React.useState(new Date().toDateString());
+
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -33,6 +37,7 @@ function MainDashboard(props) {
         <div>
             <Toolbar />
             <Divider />
+            <NavLink to="/appointment"><Button color="inherit">Appointment</Button></NavLink>
             <List>
                 {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
                     <ListItem button key={text}>
@@ -112,11 +117,17 @@ function MainDashboard(props) {
                 <Toolbar />
                 <Typography paragraph>
                     <Grid container spacing={2}>
-                        <Grid item xs={12} md={4}>
-                            <Calender></Calender>
+                        <Grid item xs={12} md={5}>
+                            <Calender
+                                date={date}
+                                setDate={setDate}>
+                            </Calender>
                         </Grid>
-                        <Grid item xs={12} md={8}>
-                            <Appointments></Appointments>
+                        <Grid item xs={12} md={7}>
+                            <Appointments
+                                date={date}
+                                setDate={setDate}>
+                            </Appointments>
                         </Grid>
                     </Grid>
                 </Typography>

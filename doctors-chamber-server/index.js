@@ -20,8 +20,9 @@ client.connect(err => {
     // get all the appointments based on the patient email address
     app.get('/appointments', (req, res) => {
         const email = req.query.email;
-        const query = { patientEmail: email }
-        console.log(query);
+        const date = new Date(req.query.date).toDateString();
+        const query = { patientEmail: email, date: date };
+        console.log(date);
         appointmentCollection.find(query).toArray((err, result) => {
             if (err) {
                 res.send(err);
