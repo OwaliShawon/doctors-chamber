@@ -18,7 +18,7 @@ const style = {
     p: 4,
 };
 
-const BookingModal = ({ booking, openBooking, handleBookingClose, date }) => {
+const BookingModal = ({ booking, openBooking, handleBookingClose, date, setBookingSuccess }) => {
     const { name, time } = booking;
     const { user } = useAuth();
     const initialBookingData = { patientName: user.name, patientEmail: user.email, patientNumber: user.number };
@@ -30,7 +30,7 @@ const BookingModal = ({ booking, openBooking, handleBookingClose, date }) => {
         const newBookingData = { ...bookingData };
         newBookingData[field] = value;
         setBookingData(newBookingData);
-        console.log(newBookingData);
+        // console.log(newBookingData);
     }
 
     const handleBookingSubmit = (e) => {
@@ -41,10 +41,25 @@ const BookingModal = ({ booking, openBooking, handleBookingClose, date }) => {
             date: date.toDateString(),
             serviceName: name,
         }
-        // send to server
-        console.log(appointment);
+
+        // send data to server
+        fetch('http://localhost:5000/appointments', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                // 'Accept': 'application/json'
+            },
+            body: JSON.stringify(appointment)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+            })
+
+        // console.log(appointment);
 
         handleBookingClose();
+        setBookingSuccess(true);
         e.preventDefault();
     }
 
