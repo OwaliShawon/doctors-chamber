@@ -26,7 +26,7 @@ const Register = () => {
         if (loginData.password !== loginData.password2) {
             alert("pass did not match")
         }
-        registerUser(loginData.email, loginData.password, navigate);
+        registerUser(loginData.name, loginData.email, loginData.password, navigate);
         e.preventDefault();
     }
 

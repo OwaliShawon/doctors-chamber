@@ -7,6 +7,7 @@ import Footer from "./components/Shared/Footer/Footer";
 import Navigation from './components/Shared/Navigation/Navigation';
 import AuthProvider from "./context/AuthProvider/AuthProvider";
 import Appointment from './Pages/Appointment/Appointment';
+import Dashboard from "./Pages/Dashboard/Dashboard";
 import Home from "./Pages/Home/Home";
 
 function App() {
@@ -22,6 +23,14 @@ function App() {
             element={
               <PrivateRoute>
                 <Appointment />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
               </PrivateRoute>
             }
           />
