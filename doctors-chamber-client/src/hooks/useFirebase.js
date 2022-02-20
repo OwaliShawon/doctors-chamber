@@ -25,7 +25,7 @@ const useFirebase = () => {
 
                 setUser(newUser);
                 // save user to database
-                saveUser(email, name)
+                saveUser(email, name, 'POST');
 
                 // send name and email to firebase AFTER user is created
                 updateProfile(auth.currentUser, {
@@ -107,7 +107,7 @@ const useFirebase = () => {
                 const token = credential.accessToken;
                 // The signed-in user info.
                 const user = result.user;
-                // ...
+                saveUser(user.email, user.displayName, 'PUT');
                 setAuthError('');
             }).catch((error) => {
                 // Handle Errors here.
@@ -122,11 +122,11 @@ const useFirebase = () => {
             }).finally(() => setIsLoading(false));
     }
 
-    const saveUser = (email, displayName) => {
+    const saveUser = (email, displayName, method) => {
         const user = { email, displayName };
         // console.log(user);
         fetch('http://localhost:5000/users', {
-            method: 'POST',
+            method: method,
             headers: {
                 'content-type': 'application/json'
             },

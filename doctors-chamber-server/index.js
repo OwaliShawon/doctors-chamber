@@ -47,6 +47,16 @@ client.connect(err => {
         // res.send(result);
     });
 
+    // update google sign in user
+    app.put('/users', (req, res) => {
+        const user = req.body;
+        const query = { patientEmail: user.email };
+        const options = { upsert: true };
+        const update = { $set: user };
+        const result = userCollection.updateOne(query, update, options); // returns a promise
+        res.send(result);
+    });
+
 
 
     // client.close();
