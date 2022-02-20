@@ -15,6 +15,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 client.connect(err => {
     const database = client.db("doctor_DB_chamber");
     const appointmentCollection = database.collection("appointmentsCollection");
+    const userCollection = database.collection("usersCollection");
     // perform actions on the collection object
 
     // get all the appointments based on the patient email address
@@ -36,6 +37,14 @@ client.connect(err => {
     app.post('/appointments', (req, res) => {
         const appointment = req.body;
         const result = appointmentCollection.insertOne(appointment);
+    });
+
+    //INSERT NEW  user FROM SIGNUP
+    app.post('/users', (req, res) => {
+        const user = req.body;
+        const result = userCollection.insertOne(user);
+        // console.log(result);
+        // res.send(result);
     });
 
 

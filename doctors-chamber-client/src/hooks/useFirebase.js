@@ -22,7 +22,12 @@ const useFirebase = () => {
                 // ...
                 setAuthError('');
                 const newUser = { email, displayName: name };
-                // send name and email to firebase
+
+                setUser(newUser);
+                // save user to database
+                saveUser(email, name)
+
+                // send name and email to firebase AFTER user is created
                 updateProfile(auth.currentUser, {
                     displayName: { displayName: name }
                 }).then(() => {
@@ -32,7 +37,6 @@ const useFirebase = () => {
                     // An error occurred
                     // ...
                 });
-                setUser(newUser);
                 navigate('/');
             })
             .catch((error) => {
@@ -116,6 +120,19 @@ const useFirebase = () => {
                 const credential = GoogleAuthProvider.credentialFromError(error);
                 // ...
             }).finally(() => setIsLoading(false));
+    }
+
+    const saveUser = (email, displayName) => {
+        const user = { email, displayName };
+        // console.log(user);
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then()
     }
 
     return {
