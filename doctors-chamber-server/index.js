@@ -23,7 +23,7 @@ client.connect(err => {
         const email = req.query.email;
         const date = new Date(req.query.date).toDateString();
         const query = { patientEmail: email, date: date };
-        console.log(date);
+        // console.log(date);
         appointmentCollection.find(query).toArray((err, result) => {
             if (err) {
                 res.send(err);
@@ -54,6 +54,17 @@ client.connect(err => {
         const options = { upsert: true };
         const update = { $set: user };
         const result = userCollection.updateOne(query, update, options); // returns a promise
+        res.send(result);
+    });
+
+    // make an admin role create
+    app.put('/users/admin', (req, res) => {
+        const user = req.body;
+        console.log('put', user);
+        const query = { email: user.email };
+        // const options = { upsert: true };
+        const update = { $set: { role: 'admin' } };
+        const result = userCollection.updateOne(query, update); // returns a promise
         res.send(result);
     });
 
