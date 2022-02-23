@@ -1,5 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 import './App.css';
+import AddAdmin from './components/DashboardComponents/AddAdmin/AddAdmin';
+import AddDoctor from './components/DashboardComponents/AddDoctor/AddDoctor';
+import DashboardHome from './components/DashboardComponents/DashboardHome/DashboardHome';
 import Login from "./components/LoginComponents/Login/Login";
 import PrivateRoute from "./components/LoginComponents/PrivateRoute/PrivateRoute";
 import Register from "./components/LoginComponents/Register/Register";
@@ -26,14 +29,12 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route
-            path="/dashboard"
-            element={
-              <PrivateRoute>
-                <Dashboard />
-              </PrivateRoute>
-            }
-          />
+          <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>}>
+            <Route path="/dashboard" element={<DashboardHome />}></Route>
+            <Route path="/dashboard/addadmin" element={<AddAdmin />} />
+            <Route path="/dashboard/adddoctor" element={<AddDoctor />} />
+          </Route>
+
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Routes>
