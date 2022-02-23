@@ -39,6 +39,21 @@ client.connect(err => {
         const result = appointmentCollection.insertOne(appointment);
     });
 
+    // is admin or not
+    app.get('/users/:email', (req, res) => {
+        const email = req.params.email;
+        const query = { email: email };
+        const user = userCollection.findOne(query)
+            .then(result => {
+                console.log(result);
+                let isAdmin = false;
+                if (result?.role === 'admin') {
+                    isAdmin = true;
+                }
+                res.send({ admin: isAdmin });
+            });
+    });
+
     //INSERT NEW  user FROM SIGNUP
     app.post('/users', (req, res) => {
         const user = req.body;
@@ -60,7 +75,7 @@ client.connect(err => {
     // make an admin role create
     app.put('/users/admin', (req, res) => {
         const user = req.body;
-        console.log('put', user);
+        // console.log('put', user);
         const query = { email: user.email };
         // const options = { upsert: true };
         const update = { $set: { role: 'admin' } };

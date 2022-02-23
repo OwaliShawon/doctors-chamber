@@ -17,6 +17,7 @@ import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
+import useAuth from './../../../hooks/useAuth';
 
 const drawerWidth = 200;
 
@@ -28,6 +29,9 @@ function MainDashboard(props) {
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
 
+    const { admin } = useAuth();
+    console.log(admin);
+
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
@@ -38,8 +42,12 @@ function MainDashboard(props) {
             <Divider />
             <NavLink to="/appointment"><Button color="inherit">Appointment</Button></NavLink>
             <NavLink to="/dashboard"><Button color="inherit">Dashboard</Button></NavLink>
-            <NavLink to="/dashboard/adddoctor"><Button color="inherit">Add Doctor</Button></NavLink>
-            <NavLink to="/dashboard/addadmin"><Button color="inherit">Add Admin</Button></NavLink>
+            {
+                admin && <Box>
+                    <NavLink to="/dashboard/adddoctor"><Button color="inherit">Add Doctor</Button></NavLink>
+                    <NavLink to="/dashboard/addadmin"><Button color="inherit">Add Admin</Button></NavLink>
+                </Box>
+            }
             <List>
                 {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
                     <ListItem button key={text}>
