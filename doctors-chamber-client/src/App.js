@@ -3,6 +3,7 @@ import './App.css';
 import AddAdmin from './components/DashboardComponents/AddAdmin/AddAdmin';
 import AddDoctor from './components/DashboardComponents/AddDoctor/AddDoctor';
 import DashboardHome from './components/DashboardComponents/DashboardHome/DashboardHome';
+import AdminRoute from "./components/LoginComponents/AdminRoute/AdminRoute";
 import Login from "./components/LoginComponents/Login/Login";
 import PrivateRoute from "./components/LoginComponents/PrivateRoute/PrivateRoute";
 import Register from "./components/LoginComponents/Register/Register";
@@ -31,8 +32,8 @@ function App() {
           />
           <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>}>
             <Route path="/dashboard" element={<DashboardHome />}></Route>
-            <Route path="/dashboard/addadmin" element={<AddAdmin />} />
-            <Route path="/dashboard/adddoctor" element={<AddDoctor />} />
+            <Route path="/dashboard/addadmin" element={<AdminRoute><AddAdmin /></AdminRoute>} />
+            <Route path="/dashboard/adddoctor" element={<AdminRoute><AddDoctor /></AdminRoute>} />
           </Route>
 
           <Route path="/login" element={<Login />} />
