@@ -6,6 +6,16 @@ const { MongoClient } = require('mongodb');
 
 const port = process.env.PORT || 5000
 
+// doctors-chamber-jm-firebase-adminsdk.json
+const admin = require("firebase-admin");
+
+const serviceAccount = require("./doctors-chamber-jm-firebase-adminsdk.json");
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+});
+
+
 app.use(cors());
 app.use(express.json());
 
@@ -17,6 +27,22 @@ client.connect(err => {
     const appointmentCollection = database.collection("appointmentsCollection");
     const userCollection = database.collection("usersCollection");
     // perform actions on the collection object
+
+    // verify firebase admin token
+    function verifyToken(req, res, next) {
+        const idToken = req.headers.authentication.split(' ')[1];
+        admin.auth().verifyIdToken(idToken)
+            .then(function (decodedToken) {
+                const uid = decodedToken.uid;
+                // console.log(uid);
+                req.uid = uid;
+                next();
+            })
+            .catch(function (error) {
+                console.log(error);
+                res.status(403).send('Unauthorized');
+            });
+    }
 
     // get all the appointments based on the patient email address
     app.get('/appointments', (req, res) => {
@@ -34,7 +60,7 @@ client.connect(err => {
     });
 
     // insert new appointment
-    app.post('/appointments', (req, res) => {
+    app.post('/appointments', verifyToken, (req, res) => {
         const appointment = req.body;
         const result = appointmentCollection.insertOne(appointment);
     });
@@ -73,14 +99,26 @@ client.connect(err => {
     });
 
     // make an admin role create
-    app.put('/users/admin', (req, res) => {
+    app.put('/users/admin', verifyToken, (req, res) => {
         const user = req.body;
-        // console.log('put', user);
-        const query = { email: user.email };
+        const requester = req.uid;
+        if (requester) {
+            const requesterAccount = userCollection.findOne({ _id: requester });
+            if (requesterAccount.role === 'admin') {
+                const query = { email: user.email };
+                const update = { $set: { role: 'admin' } };
+                const result = userCollection.updateOne(query, update);
+                res.send(result);
+            } else {
+                res.status(403).send('Unauthorized');
+            }
+        }
+        // console.log('put', req.uid);
+        // const query = { email: user.email };
         // const options = { upsert: true };
-        const update = { $set: { role: 'admin' } };
-        const result = userCollection.updateOne(query, update); // returns a promise
-        res.send(result);
+        // const update = { $set: { role: 'admin' } };
+        // const result = userCollection.updateOne(query, update); // returns a promise
+        // res.send(result);
     });
 
 

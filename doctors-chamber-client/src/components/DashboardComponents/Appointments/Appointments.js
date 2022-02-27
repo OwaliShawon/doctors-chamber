@@ -11,12 +11,14 @@ import useAuth from './../../../hooks/useAuth';
 const Appointments = ({ date }) => {
     // date = date.toDateString()
     // console.log(date)
-    const { user } = useAuth();
+    const { user, token } = useAuth();
     const [appointments, setAppointments] = useState([]);
 
     useEffect(() => {
         const url = `http://localhost:5000/appointments?email=${user.email}&date=${date}`;
-        fetch(url)
+        fetch(url, {
+            'authentication': `Bearer ${token}`,
+        })
             .then(response => response.json())
             .then((data) => { setAppointments(data) })
     }, [date]);
