@@ -13,7 +13,7 @@ const AddAdmin = () => {
         fetch('http://localhost:5000/users/admin', {
             method: 'PUT',
             headers: {
-                'authentication': `Bearer ${token}`,
+                // 'authentication': `Bearer ${token}`,
                 "content-type": 'application/json'
             },
             body: JSON.stringify(user)
@@ -24,6 +24,7 @@ const AddAdmin = () => {
                     console.log(data);
                     setSuccess(true);
                 }
+                setSuccess(true);
             })
 
         e.preventDefault();

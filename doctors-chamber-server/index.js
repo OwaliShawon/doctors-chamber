@@ -60,7 +60,7 @@ client.connect(err => {
     });
 
     // insert new appointment
-    app.post('/appointments', verifyToken, (req, res) => {
+    app.post('/appointments', (req, res) => {
         const appointment = req.body;
         const result = appointmentCollection.insertOne(appointment);
     });
@@ -99,26 +99,26 @@ client.connect(err => {
     });
 
     // make an admin role create
-    app.put('/users/admin', verifyToken, (req, res) => {
+    app.put('/users/admin', (req, res) => {
         const user = req.body;
         const requester = req.uid;
-        if (requester) {
-            const requesterAccount = userCollection.findOne({ _id: requester });
-            if (requesterAccount.role === 'admin') {
-                const query = { email: user.email };
-                const update = { $set: { role: 'admin' } };
-                const result = userCollection.updateOne(query, update);
-                res.send(result);
-            } else {
-                res.status(403).send('Unauthorized');
-            }
-        }
+        // if (requester) {
+        //     const requesterAccount = userCollection.findOne({ _id: requester });
+        //     if (requesterAccount.role === 'admin') {
+        //         const query = { email: user.email };
+        //         const update = { $set: { role: 'admin' } };
+        //         const result = userCollection.updateOne(query, update);
+        //         res.send(result);
+        //     } else {
+        //         res.status(403).send('Unauthorized');
+        //     }
+        // }
+
         // console.log('put', req.uid);
-        // const query = { email: user.email };
-        // const options = { upsert: true };
-        // const update = { $set: { role: 'admin' } };
-        // const result = userCollection.updateOne(query, update); // returns a promise
-        // res.send(result);
+        const query = { email: user.email };
+        const update = { $set: { role: 'admin' } };
+        const result = userCollection.updateOne(query, update); // returns a promise
+        res.send(result);
     });
 
 

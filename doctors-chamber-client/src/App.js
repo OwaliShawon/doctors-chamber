@@ -21,7 +21,6 @@ function App() {
         <Navigation></Navigation>
         <Routes>
           <Route path="/" element={<Home />} />
-          {/* <Route path="/appointment" element={<Appointment />} /> */}
           <Route
             path="/appointment"
             element={

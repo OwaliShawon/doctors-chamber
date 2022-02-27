@@ -16,9 +16,10 @@ const Appointments = ({ date }) => {
 
     useEffect(() => {
         const url = `http://localhost:5000/appointments?email=${user.email}&date=${date}`;
-        fetch(url, {
-            'authentication': `Bearer ${token}`,
-        })
+        fetch(url)
+            // , {
+            //     'authentication': `Bearer ${token}`,
+            // })
             .then(response => response.json())
             .then((data) => { setAppointments(data) })
     }, [date]);
