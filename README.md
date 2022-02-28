@@ -10,7 +10,7 @@
    * Pass: user123
  
  ## Features 
- * Wirhout login an user or admin cannot access dashboard or appointment route.
+ * Without login an user or admin cannot access dashboard or appointment route.
  * User can make online appointment by login through Gmail or doing Registration to login.
  * There is  Database of appointment of the user in Dashboard by Date.
  * User can Review their appointments. 
