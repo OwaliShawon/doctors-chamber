@@ -37,7 +37,7 @@ const Login = () => {
 
     return (
         <Container>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} marginTop={10}>
                 <Grid item xs={12} md={4}>
                     <Typography variant="h5" component="h1" marginTop={5}>Login</Typography>
                     {!isLoading && <form action="submit" onSubmit={handleLoginSubmit}>
@@ -63,7 +63,9 @@ const Login = () => {
                         <Button variant='contained' sx={{ width: '100%', m: 1 }} type="submit">Login</Button>
                         <NavLink to="/register"><Button variant="text">New User? Please Register</Button></NavLink>
                     </form>}
+
                     <p>..........................</p>
+
                     <Button variant="contained" color="primary" onClick={handleGoogleLogin}>Sign in With Google</Button>
 
                     {isLoading && <CircularProgress />}

@@ -1,11 +1,10 @@
-import { Alert, Button, TextField } from '@mui/material';
+import { Alert, Button, Grid, Stack, TextField } from '@mui/material';
 import React, { useState } from 'react';
-import useAuth from '../../../hooks/useAuth';
 
 const AddAdmin = () => {
     const [email, setEmail] = useState('');
     const [success, setSuccess] = useState(false);
-    const { token } = useAuth();
+    // const { token } = useAuth();
 
     const handleAdminSubmit = (e) => {
         const user = { email };
@@ -39,8 +38,14 @@ const AddAdmin = () => {
     return (
         <div>
             <form onSubmit={handleAdminSubmit}>
-                <TextField onBlur={handleOnBlur} label="Email" type="email" variant="standard" />
-                <Button type='submit' variant="contained">Make Admin</Button>
+                <Stack container>
+                    <Grid xs={12} md={12}>
+                        <TextField onBlur={handleOnBlur} label="Enter Your Email Address" type="email" variant="standard" fullWidth />
+                    </Grid>
+                    <Grid xs={12} md={12} marginTop={2}>
+                        <Button type='submit' variant="contained" fullWidth>Make Admin</Button>
+                    </Grid>
+                </Stack>
             </form>
 
             {success && <Alert severity='success'>Made Admin Successfully</Alert>}

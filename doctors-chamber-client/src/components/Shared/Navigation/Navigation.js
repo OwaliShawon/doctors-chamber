@@ -12,8 +12,8 @@ import useAuth from '../../../hooks/useAuth';
 const Navigation = () => {
     const { user, logOutUser } = useAuth();
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
+        <Box sx={{ flexGrow: 1 }} marginBottom={5}>
+            <AppBar position="fixed">
                 <Toolbar>
                     <IconButton
                         size="large"
@@ -25,7 +25,7 @@ const Navigation = () => {
                         <MenuIcon />
                     </IconButton>
 
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} color="inherit">
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} color="inherit" align="left">
                         <NavLink to="/" color="white">Doctors Chamber</NavLink>
                     </Typography>
 
@@ -34,10 +34,11 @@ const Navigation = () => {
                         user?.email ?
                             <Box>
                                 <NavLink to="/dashboard"><Button color="inherit">Dashboard</Button></NavLink>
+                                <Button color="inherit">Hi! {user.displayName}</Button>
                                 <Button onClick={logOutUser} color="inherit">Logout</Button>
                             </Box>
                             :
-                            <NavLink to="/login" ><Button color="inherit">Login</Button></NavLink>
+                            <NavLink to="/login" color="inherit"><Button color="inherit">Login</Button></NavLink>
                     }
                 </Toolbar>
             </AppBar>
